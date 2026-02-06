@@ -1,13 +1,16 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
+const SPEED = 220.0
 const JUMP_VELOCITY = -400.0
 
-const DASH_SPEED = 800.0
+const DASH_SPEED = 700.0
 var is_dashing = false
 var dashing_dir = Vector2();
-var can_dash = true
+
+@export var nb_dash = 1;
+var remaining_dash = nb_dash;
+var AfterimageScene = preload("res://trail.tscn")
 
 var looking = 1.0;
 
@@ -28,11 +31,9 @@ func _physics_process(delta: float) -> void:
 	if (is_dashing):
 		velocity.x = dashing_dir.x * DASH_SPEED
 		velocity.y = dashing_dir.y * DASH_SPEED
-		print("dashing")
 	else:
-		if (Input.is_action_just_pressed("dash") and can_dash):
-			print("dash ?")
-			can_dash = false
+		if (Input.is_action_just_pressed("dash") and remaining_dash > 0):
+			remaining_dash -= 1;
 			var dash_input = Vector2(direction_x, direction_y)
 			if dash_input == Vector2.ZERO:
 				dash_input.x = looking
@@ -41,7 +42,7 @@ func _physics_process(delta: float) -> void:
 			$dash_timer.start()
 		else:
 			if is_on_floor():
-				can_dash = true
+				remaining_dash = nb_dash
 			if direction_x:
 				velocity.x = direction_x * SPEED
 			else:
@@ -116,10 +117,19 @@ func process_player_animation() -> void:
 
 func _process(delta: float) -> void:
 	process_player_animation()
+	if (is_dashing):
+		spawn_trail()
+
 	process_player_scale(delta)
 
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
-	$dash_timer.stop()
 	velocity /= 5
+
+func spawn_trail() -> void:
+	var afterimage = AfterimageScene.instantiate()
+	afterimage.global_position = global_position
+	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.flip_h)
+	get_parent().add_child(afterimage)
+	

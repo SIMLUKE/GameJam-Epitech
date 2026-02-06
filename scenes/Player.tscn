@@ -140,7 +140,8 @@ sprite_frames = SubResource("SpriteFrames_kne1u")
 frame_progress = 0.21603379
 
 [node name="dash_timer" type="Timer" parent="CharacterBody2D" unique_id=1970440789]
-wait_time = 0.1
+wait_time = 0.2
+one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=990267631]
 zoom = Vector2(1.5, 1.5)

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://80vfie68v3ja"]
+
+[ext_resource type="Script" uid="uid://bjwm5ws02skub" path="res://trail.gd" id="1_xjhlx"]
+[ext_resource type="Texture2D" uid="uid://e8fjqq178v0b" path="res://assets/Characters/Thief_anim.png" id="2_abn3g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s3rl"]
+atlas = ExtResource("2_abn3g")
+region = Rect2(15, 15, 17, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_saw2u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6s3rl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="trail" type="Node2D" unique_id=1753006086]
+script = ExtResource("1_xjhlx")
+
+[node name="trail_death_cooldown" type="Timer" parent="." unique_id=1054245338]
+one_shot = true
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=808482057]
+sprite_frames = SubResource("SpriteFrames_saw2u")
+
+[connection signal="timeout" from="trail_death_cooldown" to="." method="_on_trail_death_cooldown_timeout"]
