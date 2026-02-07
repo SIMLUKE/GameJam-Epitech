@@ -1,22 +1,21 @@
 extends CharacterBody2D
 
+const SPEED = 220.0
+const JUMP_VELOCITY = -400.0
 
-@export var SPEED = 220.0
-@export var JUMP_VELOCITY = -400.0
-
-@export var  DASH_SPEED = 700.0
+const DASH_SPEED = 700.0
 var is_dashing = false
 var dashing_dir = Vector2();
 
 @export var nb_dash = 4;
 var remaining_dash = nb_dash;
 @export var can_walljump = true;
-@export var velocity_retention = 0.5;  # How much of current velocity to keep when hitting coin (0.0 = none, 1.0 = full)
 var has_dash_colide = false;
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
 var RegchargeCircle = preload("res://recharge_circle.tscn")
 
+var in_the_air = false
 
 @export var freeze : bool = false
 
@@ -25,10 +24,11 @@ var looking = 1.0;
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
+		in_the_air = true
 		velocity += get_gravity() * delta
-		if (is_on_wall()):
-			looking = get_wall_normal().x
-			velocity.y = 5000.0 * delta
+		wall_slide(delta)
+	elif (in_the_air):
+		land()
 
 	if (Input.is_action_just_pressed("ui_accept")
 		and (is_on_floor() or (is_on_wall() and can_walljump))):
@@ -40,9 +40,9 @@ func _physics_process(delta: float) -> void:
 		looking = sign(direction_x)
 	$AnimatedSprite2D.flip_h = looking < 0.0;
 	if (is_dashing):
-		if (((is_on_floor() and dashing_dir.y > 0) or
+		if ((is_on_floor() and dashing_dir.y > 0) or
 					(is_on_ceiling() and dashing_dir.y < 0) or
-					(is_on_wall() and abs(dashing_dir.x) > 0))
+					(is_on_wall() and abs(dashing_dir.x) > 0)
 				and not has_dash_colide):
 			has_dash_colide = true
 			$Camera2D.apply_shake()
@@ -105,6 +105,37 @@ func recharge_dash():
 		recharge_circle.position = Vector2.ZERO
 		add_child(recharge_circle)
 
+func wall_slide(delta: float):
+	if is_on_wall() and velocity.y > 0:
+		if not $"../wall_slide".playing:
+			$"../wall_slide".play()
+
+		looking = get_wall_normal().x
+		velocity.y = 5000.0 * delta
+
+		# Particules
+		$"../wall_particules".emitting = true
+		$"../wall_particules".position = position
+
+		# Orientation selon le mur
+		var wall_dir = -get_wall_normal()
+		$"../wall_particules".process_material.direction = Vector3(
+			wall_dir.x,
+			wall_dir.y,
+			0
+		)
+		$"../wall_particules".process_material.spread = 50;
+		$"../wall_particules".position.y += 24
+		$"../wall_particules".position.x += wall_dir.x * 8
+
+	else:
+		$"../wall_slide".stop()
+		$"../wall_particules".emitting = false
+	
+
+func land():
+	in_the_air = false
+	$"../land".play()
 
 const dashing_scale = Vector2(1.3, 0.7)
 const default_scale = Vector2(1.0, 1.0)
@@ -173,8 +204,6 @@ func process_player_scale(delta: float):
 
 
 func process_player_animation() -> void:
-	if ($AnimatedSprite2D.animation != "default" or $AnimatedSprite2D.animation != "run"):
-		return
 	if (velocity.x == 0 and velocity.y == 0):
 		$AnimatedSprite2D.play("default")
 	else:
@@ -186,9 +215,6 @@ func _process(delta: float) -> void:
 	process_player_animation()
 	if (is_dashing):
 		spawn_trail()
-	if (Input.is_action_just_pressed("slash")):
-		$AnimationPlayer.play("hit")
-		$"../slash".play()
 
 	process_player_scale(delta)
 
@@ -202,44 +228,3 @@ func spawn_trail() -> void:
 	afterimage.position = position
 	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.rotation_degrees, $AnimatedSprite2D.flip_h)
 	get_parent().add_child(afterimage)
-
-
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	if (area.name == "hit_coin_area"):
-		# Send the player flying based on coin position relative to player
-		var coin_position = area.global_position
-		var direction = (position - coin_position).normalized()
-		$"../coin_hit".play()
-		
-		# Impact frame freeze (Ultrakill-style)
-		freeze_frame(0.1)
-		
-		# Apply knockback force with velocity retention multiplier
-		var knockback_force = area.get_meta("power")
-		velocity = (velocity * velocity_retention) + (direction * knockback_force)
-		
-		# Recharge dash on coin hit
-		recharge_dash()
-
-
-func freeze_frame(duration: float) -> void:
-	# Freeze the game
-	Engine.time_scale = 0.0
-	
-	# Create canvas layer for UI overlay
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 100  # Render on top
-	get_tree().root.add_child(canvas_layer)
-	
-	# Create white flash overlay
-	var flash = ColorRect.new()
-	flash.color = Color(1.0, 1.0, 1.0, 0.5)  # White with 50% transparency
-	flash.set_anchors_preset(Control.PRESET_FULL_RECT)  # Fill entire screen
-	canvas_layer.add_child(flash)
-	
-	# Use get_tree to create a timer on the scene tree
-	await get_tree().create_timer(duration, true, false, true).timeout
-	
-	# Unfreeze and remove flash
-	Engine.time_scale = 1.0
-	canvas_layer.queue_free()

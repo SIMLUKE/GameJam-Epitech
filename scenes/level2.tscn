@@ -633,7 +633,7 @@ tile_map_data = PackedByteArray("AAANAAEAAAADAAUAAAAFAAAAAAABAAcAAAAHAAAAAAADAAY
 tile_set = SubResource("TileSet_alqfr")
 
 [node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
-position = Vector2(-77, -47)
+position = Vector2(-345.7918, -48.765507)
 
 [node name="LayerWall" type="TileMapLayer" parent="." unique_id=1216690425]
 scale = Vector2(0.4, 0.4)
