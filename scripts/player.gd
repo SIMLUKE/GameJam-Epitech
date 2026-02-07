@@ -273,7 +273,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		# Apply knockback force with velocity retention multiplier
 		var knockback_force = area.get_meta("power")
 		velocity = (velocity * velocity_retention) + (direction * knockback_force)
-		
 		# Recharge dash on coin hit
 		recharge_dash()
 

@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dux8hgf3wno3g" path="res://assets/sprites/Mossy Tileset/Mossy - MossyHills.png" id="3_ikw2v"]
 [ext_resource type="Texture2D" uid="uid://bh1dwxtgc4btt" path="res://assets/sprites/Mossy Tileset/Mossy - Hanging Plants.png" id="4_alqfr"]
 [ext_resource type="PackedScene" uid="uid://bch0t5uyntsxe" path="res://scenes/jump_plant.tscn" id="7_6ep0u"]
-[ext_resource type="PackedScene" uid="uid://cd3es6j53qdrt" path="res://scenes/portal.tscn" id="9_xa7n4"]
 [ext_resource type="PackedScene" uid="uid://dkuup3qinp83" path="res://scenes/goal.tscn" id="8_hrcei"]
-[ext_resource type="PackedScene" uid="uid://cuk5rg3c4cmd8" path="res://scenes/dash.tscn" id="9_xa7n4"]
-[ext_resource type="PackedScene" uid="uid://cgw2xcfdkri1o" path="res://scenes/coins.tscn" id="10_bo4dx"]
+[ext_resource type="PackedScene" path="res://scenes/dash.tscn" id="9_xa7n4"]
+[ext_resource type="PackedScene" path="res://scenes/coins.tscn" id="10_bo4dx"]
+[ext_resource type="PackedScene" uid="uid://cd3es6j53qdrt" path="res://scenes/portal.tscn" id="11_76toy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xa7n4"]
 texture = ExtResource("2_alqfr")
@@ -634,12 +634,8 @@ tile_map_data = PackedByteArray("AAANAAEAAAADAAUAAAAFAAAAAAABAAcAAAAHAAAAAAADAAY
 tile_set = SubResource("TileSet_alqfr")
 
 [node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
-<<<<<<< HEAD
 z_index = 10
 position = Vector2(-226.09465, -469.9222)
-=======
-position = Vector2(-345.7918, -48.765507)
->>>>>>> 88c505a0ba90732707d284e6311cdfa8c29d7ed6
 
 [node name="LayerWall" type="TileMapLayer" parent="." unique_id=1216690425]
 z_index = 20
@@ -659,12 +655,6 @@ position = Vector2(16190.151, 873.346)
 position = Vector2(16868.434, 336.9254)
 scale = Vector2(0.9999999, 0.9999999)
 
-[node name="portal" parent="." unique_id=189543025 instance=ExtResource("9_xa7n4")]
-position = Vector2(515.00024, 139.99976)
-scale = Vector2(0.99999976, 0.99999976)
-[node name="JumpPlant" parent="JumpPlant2/JumpPlant" unique_id=710811812 instance=ExtResource("7_6ep0u")]
-position = Vector2(672.3047, -633.3333)
-
 [node name="Goal" parent="." unique_id=951888479 instance=ExtResource("8_hrcei")]
 position = Vector2(4406.6294, -97.53102)
 
@@ -673,4 +663,7 @@ position = Vector2(891.07886, -66.49842)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Coins" parent="." unique_id=1003184426 instance=ExtResource("10_bo4dx")]
-position = Vector2(3950.0066, -70.93164)
+position = Vector2(345.00024, -74.99999)
+
+[node name="portal" parent="." unique_id=189543025 instance=ExtResource("11_76toy")]
+position = Vector2(474.99997, 159.99998)
