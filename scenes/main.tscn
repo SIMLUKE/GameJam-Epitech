@@ -14,4 +14,6 @@ time_remaining_default = 300.0
 [node name="Menu" parent="." unique_id=955462581 instance=ExtResource("3_jyhfs")]
 position = Vector2(5, 10)
 
+[connection signal="lose" from="Player" to="." method="_on_player_lose"]
+[connection signal="win" from="Player" to="." method="_on_player_win"]
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]

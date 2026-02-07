@@ -15,6 +15,11 @@ func _process(delta: float) -> void:
 	var min = int(time_remaining / 60.0)
 	var sec = int(time_remaining) % 60
 	$HUD/CanvasLayer/Time.text = "%02d : %02d" % [min, sec]
+	
+	# Update progress bar
+	if has_node("HUD/CanvasLayer/TextureProgressBar"):
+		$HUD/CanvasLayer/TextureProgressBar.value = time_remaining
+		$HUD/CanvasLayer/TextureProgressBar.max_value = time_remaining
 
 
 func add_time(seconds: float) -> void:

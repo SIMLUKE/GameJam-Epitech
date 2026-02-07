@@ -24,6 +24,13 @@ func _process(delta: float) -> void:
 	var sec = int(time_remaining) % 60
 	$HUD/CanvasLayer/Time.text = "%02d : %02d" % [min, sec]
 	
+	var progress_bar = $HUD/CanvasLayer/TextureProgressBar
+	if progress_bar:
+		progress_bar.value = time_remaining
+		progress_bar.max_value = time_remaining_default
+	else:
+		print("ERROR: Progress bar not found!")
+	
 	if (alive and time_remaining <= 0):
 		alive = false
 		lose.emit()

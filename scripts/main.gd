@@ -35,12 +35,12 @@ func _on_player_lose() -> void:
 	$level2.queue_free()
 	var lost_scene = LOST_SCENE.instantiate()
 	add_child(lost_scene)
-	# Connect signals if the lost scene has any (e.g., restart button)
 
 func _on_menu_start_game() -> void:
 	$Player.show()
 	$Player/CharacterBody2D.freeze = false
 	$Player.time_remaining = $Player.time_remaining_default
+
 	$Player.alive = true
 	$Player/CharacterBody2D.position = Vector2.ZERO
 	$Menu.queue_free()

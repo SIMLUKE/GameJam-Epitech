@@ -1,10 +1,40 @@
 [gd_scene format=3 uid="uid://c8mqwvrcyjypj"]
 
+[ext_resource type="Texture2D" uid="uid://br0a4dc8v5fgx" path="res://assets/sprites/bar.png" id="1_qpvh6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1etfg"]
+atlas = ExtResource("1_qpvh6")
+region = Rect2(48, 208, 648, 24)
+margin = Rect2(49.56, 32.52, 0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpvh6"]
+atlas = ExtResource("1_qpvh6")
+region = Rect2(0, 24.5, 736, 86)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fls4u"]
+atlas = ExtResource("1_qpvh6")
+region = Rect2(0, 132.5, 736, 27.5)
+
 [node name="HUD" type="Node" unique_id=374305310]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1312082848]
 
 [node name="Time" type="Label" parent="CanvasLayer" unique_id=279927745]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 544.0
+offset_top = 80.0
+offset_right = 584.0
+offset_bottom = 103.0
 text = "0"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1769613730]
+anchors_preset = -1
+anchor_bottom = 0.043
+offset_left = 192.0
+offset_right = 928.0
+offset_bottom = 58.136
+max_value = 300.0
+value = 300.0
+texture_under = SubResource("AtlasTexture_1etfg")
+texture_over = SubResource("AtlasTexture_qpvh6")
+texture_progress = SubResource("AtlasTexture_fls4u")
+texture_progress_offset = Vector2(0, 35)

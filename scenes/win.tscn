@@ -6,11 +6,17 @@
 script = ExtResource("1_r4oei")
 
 [node name="Label" type="Label" parent="." unique_id=1765994831]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -56.0
+offset_top = -61.0
+offset_right = 64.0
+offset_bottom = -38.0
+text = "YOU WIN (goat)"
 
 [node name="Button" type="Button" parent="." unique_id=1338596394]
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = -54.0
+offset_top = 30.0
+offset_right = 61.0
+offset_bottom = 61.0
+text = "Back to menu"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

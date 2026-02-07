@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dkuup3qinp83"]
+
+[ext_resource type="Texture2D" uid="uid://tb8itxxq7trm" path="res://assets/sprites/juice.png" id="1_jbojv"]
+[ext_resource type="Script" uid="uid://blxphrtrlr4wf" path="res://scripts/goal.gd" id="1_jvyg3"]
+[ext_resource type="Texture2D" uid="uid://7x8467g2tkfh" path="res://assets/sprites/star.png" id="2_w3gav"]
+[ext_resource type="Script" uid="uid://brgmdfrjm5yvd" path="res://scripts/star_annimation.gd" id="3_jvyg3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sx1j4"]
+atlas = ExtResource("1_jbojv")
+region = Rect2(713, 453, 173, 172)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xl315"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sx1j4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqdrf"]
+size = Vector2(43, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo0vh"]
+atlas = ExtResource("2_w3gav")
+region = Rect2(452, 163, 96, 82)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cc8po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo0vh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Goal" type="Node2D" unique_id=951888479]
+script = ExtResource("1_jvyg3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=723418423]
+position = Vector2(-1, 1)
+scale = Vector2(0.25578037, 0.24709304)
+sprite_frames = SubResource("SpriteFrames_xl315")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=683229642]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2145294426]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_aqdrf")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1300950621]
+z_index = -1
+scale = Vector2(2.7382813, 2.567073)
+sprite_frames = SubResource("SpriteFrames_cc8po")
+script = ExtResource("3_jvyg3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

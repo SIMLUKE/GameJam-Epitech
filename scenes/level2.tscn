@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dux8hgf3wno3g" path="res://assets/sprites/Mossy Tileset/Mossy - MossyHills.png" id="3_ikw2v"]
 [ext_resource type="Texture2D" uid="uid://bh1dwxtgc4btt" path="res://assets/sprites/Mossy Tileset/Mossy - Hanging Plants.png" id="4_alqfr"]
 [ext_resource type="PackedScene" uid="uid://bch0t5uyntsxe" path="res://scenes/jump_plant.tscn" id="7_6ep0u"]
+[ext_resource type="PackedScene" uid="uid://dkuup3qinp83" path="res://scenes/goal.tscn" id="8_hrcei"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_if4l3"]
 texture = ExtResource("2_4038r")
@@ -648,3 +649,6 @@ position = Vector2(765.16895, 476.3062)
 
 [node name="JumpPlant" parent="JumpPlant2/JumpPlant" unique_id=710811812 instance=ExtResource("7_6ep0u")]
 position = Vector2(672.3047, -633.3333)
+
+[node name="Goal" parent="." unique_id=951888479 instance=ExtResource("8_hrcei")]
+position = Vector2(953, -85)
