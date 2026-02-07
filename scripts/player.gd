@@ -8,9 +8,11 @@ const DASH_SPEED = 700.0
 var is_dashing = false
 var dashing_dir = Vector2();
 
-@export var nb_dash = 1;
+@export var nb_dash = 4;
 var remaining_dash = nb_dash;
 var AfterimageScene = preload("res://trail.tscn")
+#var circle = preload("res://circle.tscn")
+
 
 @export var freeze : bool = false
 
@@ -24,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-	
+
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y := Input.get_axis("ui_up", "ui_down")
 	if (direction_x):
@@ -81,7 +83,7 @@ func process_player_scale(delta: float):
 				default_scale.y
 			)
 
-		elif ay > ax:
+		else:
 			set_player_scale_x(
 				$AnimatedSprite2D.scale.x - speed_dash,
 				dashing_scale.y,
@@ -92,12 +94,10 @@ func process_player_scale(delta: float):
 				default_scale.y,
 				dashing_scale.x
 			)
-
-		else:
-			pass
-
+			if (abs(ay - ax) < 0.01):
+				$AnimatedSprite2D.rotation_degrees = looking * 20
 	else:
-		# Retour smooth à la normale
+		$AnimatedSprite2D.rotation_degrees = 0
 		set_player_scale_x(
 			$AnimatedSprite2D.scale.x - speed_reset,
 			default_scale.x,
@@ -115,8 +115,8 @@ func process_player_animation() -> void:
 		$AnimatedSprite2D.play("default")
 	else:
 		$AnimatedSprite2D.play("run")
-	
-		
+
+
 
 func _process(delta: float) -> void:
 	process_player_animation()
@@ -133,6 +133,5 @@ func _on_dash_timer_timeout() -> void:
 func spawn_trail() -> void:
 	var afterimage = AfterimageScene.instantiate()
 	afterimage.position = position
-	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.flip_h)
+	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.rotation_degrees, $AnimatedSprite2D.flip_h)
 	get_parent().add_child(afterimage)
-	

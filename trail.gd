@@ -5,8 +5,9 @@ func _ready() -> void:
 	$AnimatedSprite2D.self_modulate.b = 2
 
 	
-func set_texture_state(scale: Vector2, flip_h: bool):
+func set_texture_state(scale: Vector2, rotation: float, flip_h: bool):
 	$AnimatedSprite2D.scale = scale
+	$AnimatedSprite2D.rotation_degrees = rotation
 	$AnimatedSprite2D.flip_h = flip_h
 
 

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://ca6nd1fcgp0tu"]
 
-[ext_resource type="Script" uid="uid://bsbbbwei2iok4" path="res://scripts/player_logic.gd" id="1_mdl7e"]
+[ext_resource type="Script" path="res://scripts/player_logic.gd" id="1_mdl7e"]
 [ext_resource type="Script" uid="uid://ubstlqyj2ddn" path="res://scripts/player.gd" id="1_xhfnw"]
 [ext_resource type="Texture2D" uid="uid://e8fjqq178v0b" path="res://assets/Characters/Thief_anim.png" id="2_v6fml"]
-[ext_resource type="Script" uid="uid://ckwk1rae11u8i" path="res://scripts/player_timer.gd" id="4_qu4a1"]
+[ext_resource type="Script" path="res://scripts/player_timer.gd" id="4_qu4a1"]
 [ext_resource type="PackedScene" uid="uid://c8mqwvrcyjypj" path="res://scenes/HUD.tscn" id="5_qu4a1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
