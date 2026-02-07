@@ -10,6 +10,7 @@ var dashing_dir = Vector2();
 
 @export var nb_dash = 4;
 var remaining_dash = nb_dash;
+@export var can_walljump = true;
 var has_dash_colide = false;
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
@@ -25,9 +26,14 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if (Input.is_action_just_pressed("ui_accept")
+		and (is_on_floor() or (is_on_wall() and can_walljump))):
 		velocity.y = JUMP_VELOCITY
+
+		if is_on_wall() and not is_on_floor():
+			var wall_dir = get_wall_normal().x
+			# pousse à l'opposé du mur
+			velocity.x = wall_dir * SPEED * 2
 
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y := Input.get_axis("ui_up", "ui_down")
@@ -50,10 +56,22 @@ func _physics_process(delta: float) -> void:
 		else:
 			if is_on_floor():
 				recharge_dash()
-			if direction_x:
-				velocity.x = direction_x * SPEED
-			else:
-				velocity.x = move_toward(velocity.x, 0, SPEED)
+		const ACCEL = 2000.0
+		var FRICTION = 0.0
+		if (is_on_floor()):
+			FRICTION = 1800.0
+		else:
+			FRICTION = 300.0
+
+		if direction_x != 0:
+			velocity.x = move_toward(velocity.x, direction_x * SPEED, ACCEL * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+
+			#if direction_x:
+			#	velocity.x = direction_x * SPEED
+			#else:
+			#	velocity.x = move_toward(velocity.x, 0, SPEED)
 	if (not freeze):
 		move_and_slide()
 

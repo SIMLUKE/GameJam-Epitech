@@ -166,7 +166,7 @@ sources/4 = SubResource("TileSetAtlasSource_if4l3")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1970589003]
 position = Vector2(0, 2)
-tile_map_data = PackedByteArray(0, 0, 255, 255, 1, 0, 4, 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1, 0, 3, 0, 0, 0, 1, 0, 1, 0, 4, 0, 2, 0, 3, 0, 0, 0)
+tile_map_data = PackedByteArray(0, 0, 255, 255, 1, 0, 4, 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1, 0, 3, 0, 0, 0, 1, 0, 1, 0, 4, 0, 2, 0, 3, 0, 0, 0, 254, 255, 0, 0, 4, 0, 3, 0, 3, 0, 0, 0, 255, 255, 0, 0, 4, 0, 3, 0, 3, 0, 0, 0)
 tile_set = SubResource("TileSet_6ep0u")
 
 [node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
