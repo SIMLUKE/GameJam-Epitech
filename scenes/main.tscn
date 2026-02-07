@@ -3,17 +3,20 @@
 [ext_resource type="Script" uid="uid://b62niqurjk21g" path="res://scripts/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bp71qag1s13hq" path="res://scenes/menu.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://ca6nd1fcgp0tu" path="res://scenes/Player.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bjq43nk127tp8" path="res://scenes/death_plane.tscn" id="4_jyhfs"]
 
 [node name="main" type="Node" unique_id=779754891]
 script = ExtResource("1_h2yge")
 
 [node name="Player" parent="." unique_id=1590788841 instance=ExtResource("3_sugp2")]
-position = Vector2(3, 9)
-time_remaining_default = 300.0
 
 [node name="Menu" parent="." unique_id=955462581 instance=ExtResource("3_jyhfs")]
 position = Vector2(5, 10)
 
+[node name="DeathPlane" parent="." unique_id=596229479 instance=ExtResource("4_jyhfs")]
+position = Vector2(0, 1346)
+
 [connection signal="lose" from="Player" to="." method="_on_player_lose"]
 [connection signal="win" from="Player" to="." method="_on_player_win"]
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]
+[connection signal="body_entered" from="DeathPlane" to="." method="_on_death_plane_body_entered"]

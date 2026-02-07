@@ -45,3 +45,13 @@ func _on_menu_start_game() -> void:
 	$Player/CharacterBody2D.position = Vector2.ZERO
 	$Menu.queue_free()
 	add_child(LEVEL2_SCENE.instantiate())
+
+
+func _on_death_plane_body_entered(body: Node2D) -> void:
+	var parent = body.get_parent()
+	if (parent && parent.name == "Player"):
+		parent.subtract_time(10000000000)
+	elif(parent):
+		parent.queue_free()
+	else:
+		body.queue_free()

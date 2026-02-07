@@ -606,6 +606,8 @@ tile_size = Vector2i(512, 512)
 sources/0 = SubResource("TileSetAtlasSource_2k3dv")
 
 [node name="level2" type="Node2D" unique_id=2131177618]
+position = Vector2(0, 17.999998)
+scale = Vector2(0.22556923, 0.22556923)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1970589003]
 position = Vector2(0, 2)
@@ -631,7 +633,7 @@ tile_map_data = PackedByteArray("AAANAAEAAAADAAUAAAAFAAAAAAABAAcAAAAHAAAAAAADAAY
 tile_set = SubResource("TileSet_alqfr")
 
 [node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
-position = Vector2(238, -180)
+position = Vector2(-77, -47)
 
 [node name="LayerWall" type="TileMapLayer" parent="." unique_id=1216690425]
 scale = Vector2(0.4, 0.4)

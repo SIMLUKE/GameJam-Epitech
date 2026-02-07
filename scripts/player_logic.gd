@@ -10,7 +10,7 @@ signal lose
 var alive = true
 
 func _ready() -> void:
-	pass
+	$CharacterBody2D/AnimatedSprite2D.play("default")
 
 
 func _process(delta: float) -> void:
@@ -33,7 +33,8 @@ func _process(delta: float) -> void:
 	
 	if (alive and time_remaining <= 0):
 		alive = false
-		lose.emit()
+		print("dead")
+		$CharacterBody2D/AnimatedSprite2D.play("dead")
 
 
 func add_time(seconds: float) -> void:
@@ -49,4 +50,12 @@ func set_time(seconds: float) -> void:
 	time_remaining = max(0, seconds)
 
 func hit(damage: float) -> void:
+	$CharacterBody2D/AnimatedSprite2D.play("hurt")
 	subtract_time(damage)
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if ($CharacterBody2D/AnimatedSprite2D.animation == "dead"):
+		lose.emit()
+	$CharacterBody2D/AnimatedSprite2D.play("default")
+	

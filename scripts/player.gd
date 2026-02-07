@@ -39,9 +39,9 @@ func _physics_process(delta: float) -> void:
 		looking = sign(direction_x)
 	$AnimatedSprite2D.flip_h = looking < 0.0;
 	if (is_dashing):
-		if ((is_on_floor() and dashing_dir.y > 0) or
+		if (((is_on_floor() and dashing_dir.y > 0) or
 					(is_on_ceiling() and dashing_dir.y < 0) or
-					(is_on_wall() and abs(dashing_dir.x) > 0)
+					(is_on_wall() and abs(dashing_dir.x) > 0))
 				and not has_dash_colide):
 			has_dash_colide = true
 			$Camera2D.apply_shake()
@@ -172,6 +172,8 @@ func process_player_scale(delta: float):
 
 
 func process_player_animation() -> void:
+	if ($AnimatedSprite2D.animation != "default" or $AnimatedSprite2D.animation != "run"):
+		return
 	if (velocity.x == 0 and velocity.y == 0):
 		$AnimatedSprite2D.play("default")
 	else:
@@ -183,6 +185,8 @@ func _process(delta: float) -> void:
 	process_player_animation()
 	if (is_dashing):
 		spawn_trail()
+	if (Input.is_action_just_pressed("slash")):
+		$AnimationPlayer.play("hit")
 
 	process_player_scale(delta)
 

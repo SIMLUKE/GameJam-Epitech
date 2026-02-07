@@ -32,20 +32,20 @@ scale = Vector2(0.99999994, 0.99999994)
 physics_material_override = SubResource("PhysicsMaterial_wm70f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D" unique_id=1342271659]
-position = Vector2(-0.9999962, -4)
+position = Vector2(0, 0)
 scale = Vector2(0.7265625, 0.6435547)
 sprite_frames = SubResource("SpriteFrames_cuegt")
 
 [node name="Area2D" type="Area2D" parent="RigidBody2D" unique_id=1102998219]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/Area2D" unique_id=1084344691]
-position = Vector2(-0.99999905, -6.000001)
+position = Vector2(0, 0)
 scale = Vector2(0.9999995, 0.9999995)
 shape = SubResource("RectangleShape2D_md22f")
 debug_color = Color(0.96862745, 0, 0, 0.41960785)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=695104832]
-position = Vector2(-0.24999617, -3.4999979)
+position = Vector2(0, 0)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_fn5nn")
 
