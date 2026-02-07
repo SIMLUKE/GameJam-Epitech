@@ -187,6 +187,7 @@ func _process(delta: float) -> void:
 		spawn_trail()
 	if (Input.is_action_just_pressed("slash")):
 		$AnimationPlayer.play("hit")
+		$"../slash".play()
 
 	process_player_scale(delta)
 
@@ -200,3 +201,44 @@ func spawn_trail() -> void:
 	afterimage.position = position
 	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.rotation_degrees, $AnimatedSprite2D.flip_h)
 	get_parent().add_child(afterimage)
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if (area.name == "hit_coin_area"):
+		# Send the player flying based on coin position relative to player
+		var coin_position = area.global_position
+		var direction = (position - coin_position).normalized()
+		$"../coin_hit".play()
+		
+		# Impact frame freeze (Ultrakill-style)
+		freeze_frame(0.1)
+		
+		# Apply knockback force
+		var knockback_force = area.get_meta("power")
+		velocity = direction * knockback_force
+		
+		# Recharge dash on coin hit
+		recharge_dash()
+
+
+func freeze_frame(duration: float) -> void:
+	# Freeze the game
+	Engine.time_scale = 0.0
+	
+	# Create canvas layer for UI overlay
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100  # Render on top
+	get_tree().root.add_child(canvas_layer)
+	
+	# Create white flash overlay
+	var flash = ColorRect.new()
+	flash.color = Color(1.0, 1.0, 1.0, 0.5)  # White with 50% transparency
+	flash.set_anchors_preset(Control.PRESET_FULL_RECT)  # Fill entire screen
+	canvas_layer.add_child(flash)
+	
+	# Use get_tree to create a timer on the scene tree
+	await get_tree().create_timer(duration, true, false, true).timeout
+	
+	# Unfreeze and remove flash
+	Engine.time_scale = 1.0
+	canvas_layer.queue_free()

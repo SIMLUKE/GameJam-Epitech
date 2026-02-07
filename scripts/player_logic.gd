@@ -3,6 +3,8 @@ extends Node2D
 @export var time_remaining_default: float = 300.0
 var time_remaining: float = time_remaining_default
 
+var coin = preload("res://scenes/hit_coin.tscn")
+
 signal win
 
 signal lose
@@ -35,6 +37,15 @@ func _process(delta: float) -> void:
 		alive = false
 		print("dead")
 		$CharacterBody2D/AnimatedSprite2D.play("dead")
+	if (Input.is_action_just_pressed("spawn_coin")):
+		var coin_e = coin.instantiate()
+		# Spawn coin at player position with player velocity plus upward boost
+		coin_e.position = $CharacterBody2D.position
+		if coin_e.has_method("set_initial_velocity"):
+			var initial_velocity = $CharacterBody2D.velocity
+			initial_velocity.y -= 300.0  # Add upward velocity
+			coin_e.set_initial_velocity(initial_velocity)
+		add_child(coin_e)
 
 
 func add_time(seconds: float) -> void:

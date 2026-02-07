@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c8mqwvrcyjypj" path="res://scenes/HUD.tscn" id="5_qu4a1"]
 [ext_resource type="AudioStream" uid="uid://c71qjskb2pv02" path="res://assets/sounds/dash.wav" id="6_70d11"]
 [ext_resource type="AudioStream" uid="uid://bjwmwqe0b36ee" path="res://assets/sounds/jump.wav" id="7_cw2d6"]
+[ext_resource type="AudioStream" uid="uid://d2l10bw4jdx2b" path="res://assets/sounds/PunchSwoosh.ogg.mp3" id="8_bruh7"]
+[ext_resource type="AudioStream" uid="uid://cxoolt36axukx" path="res://assets/sounds/parry-ultrakill.mp3" id="9_6eyey"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
 size = Vector2(22, 18)
@@ -281,6 +283,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_70d11"]
 resource_name = "hit"
+step = 0.0666
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -312,7 +315,7 @@ tracks/2/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.13333334, 0.33333334),
+"times": PackedFloat32Array(0.03333333, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -337,8 +340,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_khinc"]
-radius = 2.9999993
-height = 22.0
+radius = 4.9999986
+height = 23.999992
 
 [node name="Player" type="Node2D" unique_id=1590788841]
 script = ExtResource("1_mdl7e")
@@ -390,5 +393,12 @@ pitch_scale = 1.34
 stream = ExtResource("7_cw2d6")
 volume_db = -20.26
 
+[node name="slash" type="AudioStreamPlayer" parent="." unique_id=951693105]
+stream = ExtResource("8_bruh7")
+
+[node name="coin_hit" type="AudioStreamPlayer" parent="." unique_id=16292291]
+stream = ExtResource("9_6eyey")
+
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="CharacterBody2D/dash_timer" to="CharacterBody2D" method="_on_dash_timer_timeout"]
+[connection signal="area_entered" from="CharacterBody2D/Hitbox" to="CharacterBody2D" method="_on_hitbox_area_entered"]
