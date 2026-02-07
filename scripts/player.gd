@@ -8,8 +8,13 @@ extends CharacterBody2D
 var is_dashing = false
 var dashing_dir = Vector2();
 
-@export var nb_dash = 4;
+
+@export var nb_dash = 0;
+@export var nb_coins = 0  # Maximum coins that can be held
+@export var coin_regen_time = 0.4
 var remaining_dash = nb_dash;
+var remaining_coins = 0  # Current coins available
+var coin_regen_timer = 0.0
 @export var can_walljump = true;
 @export var velocity_retention = 0.5;  # How much of current velocity to keep when hitting coin (0.0 = none, 1.0 = full)
 var has_dash_colide = false;
@@ -23,6 +28,15 @@ var RegchargeCircle = preload("res://recharge_circle.tscn")
 var looking = 1.0;
 
 func _physics_process(delta: float) -> void:
+	# Coin regeneration system
+	if remaining_coins < nb_coins:
+		coin_regen_timer += delta
+		if coin_regen_timer >= coin_regen_time:
+			remaining_coins += 1
+			coin_regen_timer = 0.0
+	else:
+		coin_regen_timer = 0.0
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -180,7 +194,7 @@ func process_player_animation() -> void:
 	else:
 		$AnimatedSprite2D.play("run")
 
-
+var coin = preload("res://scenes/hit_coin.tscn")
 
 func _process(delta: float) -> void:
 	process_player_animation()
@@ -189,6 +203,16 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("slash")):
 		$AnimationPlayer.play("hit")
 		$"../slash".play()
+	if (Input.is_action_just_pressed("spawn_coin") and remaining_coins > 0):
+		var coin_e = coin.instantiate()
+		remaining_coins -= 1
+		# Spawn coin at player position with player velocity plus upward boost
+		coin_e.position = global_position
+		if coin_e.has_method("set_initial_velocity"):
+			var initial_velocity = velocity
+			initial_velocity.y -= 300.0  # Add upward velocity
+			coin_e.set_initial_velocity(initial_velocity)
+		get_parent().add_child(coin_e)
 
 	process_player_scale(delta)
 
@@ -243,3 +267,11 @@ func freeze_frame(duration: float) -> void:
 	# Unfreeze and remove flash
 	Engine.time_scale = 1.0
 	canvas_layer.queue_free()
+
+
+func _on_player_unlock(mvt: Variant) -> void:
+	if (mvt == "dash"):
+		nb_dash += 1
+	if (mvt == "coin"):
+		remaining_coins += 1
+		nb_coins += 1  # Increase max coins when unlocking

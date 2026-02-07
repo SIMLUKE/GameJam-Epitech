@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bh1dwxtgc4btt" path="res://assets/sprites/Mossy Tileset/Mossy - Hanging Plants.png" id="4_alqfr"]
 [ext_resource type="PackedScene" uid="uid://bch0t5uyntsxe" path="res://scenes/jump_plant.tscn" id="7_6ep0u"]
 [ext_resource type="PackedScene" uid="uid://dkuup3qinp83" path="res://scenes/goal.tscn" id="8_hrcei"]
+[ext_resource type="PackedScene" uid="uid://cuk5rg3c4cmd8" path="res://scenes/dash.tscn" id="9_xa7n4"]
+[ext_resource type="PackedScene" uid="uid://cgw2xcfdkri1o" path="res://scenes/coins.tscn" id="10_bo4dx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_if4l3"]
 texture = ExtResource("2_4038r")
@@ -653,4 +655,11 @@ position = Vector2(765.16895, 476.3062)
 position = Vector2(672.3047, -633.3333)
 
 [node name="Goal" parent="." unique_id=951888479 instance=ExtResource("8_hrcei")]
-position = Vector2(953, -85)
+position = Vector2(4406.6294, -97.53102)
+
+[node name="Dash" parent="." unique_id=452959866 instance=ExtResource("9_xa7n4")]
+position = Vector2(891.07886, -66.49842)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Coins" parent="." unique_id=1003184426 instance=ExtResource("10_bo4dx")]
+position = Vector2(3950.0066, -70.93164)

@@ -39,10 +39,7 @@ func _on_player_lose() -> void:
 func _on_menu_start_game() -> void:
 	$Player.show()
 	$Player/CharacterBody2D.freeze = false
-	$Player.time_remaining = $Player.time_remaining_default
-
-	$Player.alive = true
-	$Player/CharacterBody2D.position = Vector2.ZERO
+	$Player.reset()
 	$Menu.queue_free()
 	add_child(LEVEL2_SCENE.instantiate())
 
