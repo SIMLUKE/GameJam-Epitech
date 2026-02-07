@@ -6,17 +6,17 @@
 script = ExtResource("1_5scu2")
 
 [node name="Loser" type="Label" parent="." unique_id=1310378088]
-offset_left = 105.0
-offset_top = 96.0
-offset_right = 219.0
-offset_bottom = 119.0
+offset_left = -50.0
+offset_top = -104.0
+offset_right = 64.0
+offset_bottom = -81.0
 text = "You lost looser"
 
 [node name="Button" type="Button" parent="." unique_id=241107630]
-offset_left = 109.0
-offset_top = 196.0
-offset_right = 224.0
-offset_bottom = 227.0
+offset_left = -56.0
+offset_top = 58.0
+offset_right = 59.0
+offset_bottom = 89.0
 text = "Back to menu"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

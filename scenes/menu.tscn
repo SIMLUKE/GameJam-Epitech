@@ -6,17 +6,17 @@
 script = ExtResource("1_yqeox")
 
 [node name="Title" type="Label" parent="." unique_id=237047546]
-offset_left = 139.0
-offset_top = 60.0
-offset_right = 203.0
-offset_bottom = 83.0
+offset_left = -34.0
+offset_top = -69.0
+offset_right = 30.0
+offset_bottom = -46.0
 text = "LE TITRE"
 
 [node name="Button" type="Button" parent="." unique_id=593800682]
-offset_left = 143.0
-offset_top = 153.0
-offset_right = 199.0
-offset_bottom = 184.0
+offset_left = -29.0
+offset_top = 45.0
+offset_right = 27.0
+offset_bottom = 76.0
 text = "START"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

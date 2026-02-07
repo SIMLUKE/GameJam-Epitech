@@ -8,11 +8,11 @@
 script = ExtResource("1_h2yge")
 
 [node name="Player" parent="." unique_id=1590788841 instance=ExtResource("3_sugp2")]
-position = Vector2(3, -102)
+position = Vector2(3, 9)
 
 [node name="Menu" parent="." unique_id=955462581 instance=ExtResource("3_jyhfs")]
-position = Vector2(-157, -215)
+position = Vector2(5, 10)
 
-[connection signal="Lose" from="Player" to="." method="_on_player_lose" flags=18]
-[connection signal="Win" from="Player" to="." method="_on_player_win"]
+[connection signal="lose" from="Player" to="." method="_on_player_lose"]
+[connection signal="win" from="Player" to="." method="_on_player_win"]
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]

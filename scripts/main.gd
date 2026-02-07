@@ -1,8 +1,14 @@
 extends Node
 
+# Preload scenes to avoid loading them multiple times
+const WIN_SCENE = preload("res://scenes/win.tscn")
+const LOST_SCENE = preload("res://scenes/lost.tscn")
+const LEVEL2_SCENE = preload("res://scenes/level2.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Player.hide()
+	$Player/CharacterBody2D.position = Vector2.ZERO
 	$Player/CharacterBody2D.freeze = true
 
 
@@ -14,18 +20,28 @@ func _process(delta: float) -> void:
 func _on_player_win() -> void:
 	$Player.hide()
 	$Player/CharacterBody2D.freeze = true
+	$Player/CharacterBody2D.position = Vector2.ZERO
 	$level2.queue_free()
-	load("res://scenes/win.tscn")
+	var win_scene = WIN_SCENE.instantiate()
+	add_child(win_scene)
+	# Connect signals if the win scene has any (e.g., restart button)
 
 
 func _on_player_lose() -> void:
+	print("lose")
 	$Player.hide()
 	$Player/CharacterBody2D.freeze = true
+	$Player/CharacterBody2D.position = Vector2.ZERO
 	$level2.queue_free()
-	load("res://scenes/lost.tscn")
+	var lost_scene = LOST_SCENE.instantiate()
+	add_child(lost_scene)
+	# Connect signals if the lost scene has any (e.g., restart button)
 
 func _on_menu_start_game() -> void:
 	$Player.show()
 	$Player/CharacterBody2D.freeze = false
+	$Player.time_remaining = $Player.time_remaining_default
+	$Player.alive = true
+	$Player/CharacterBody2D.position = Vector2.ZERO
 	$Menu.queue_free()
-	add_child(load("res://scenes/level2.tscn").instantiate())
+	add_child(LEVEL2_SCENE.instantiate())

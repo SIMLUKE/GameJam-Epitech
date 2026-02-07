@@ -12,5 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	load("res://scenes/menu.tscn")
+	var menu = load("res://scenes/menu.tscn").instantiate()
+	get_parent().add_child(menu)
+	menu.start_game.connect(get_parent()._on_menu_start_game)
 	queue_free()

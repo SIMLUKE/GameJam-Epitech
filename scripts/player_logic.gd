@@ -1,17 +1,21 @@
 extends Node2D
 
-@export var time_remaining: float = 300.0
+@export var time_remaining_default: float = 300.0
+var time_remaining: float = time_remaining_default
 
-signal Win
+signal win
 
-signal Lose
+signal lose
+
+var alive = true
 
 func _ready() -> void:
 	pass
 
 
 func _process(delta: float) -> void:
-	time_remaining -= delta
+	if (not $CharacterBody2D.freeze):
+		time_remaining -= delta
 	
 	time_remaining = max(0, time_remaining)
 	
@@ -19,6 +23,10 @@ func _process(delta: float) -> void:
 	var min = int(time_remaining / 60.0)
 	var sec = int(time_remaining) % 60
 	$HUD/CanvasLayer/Time.text = "%02d : %02d" % [min, sec]
+	
+	if (alive and time_remaining <= 0):
+		alive = false
+		lose.emit()
 
 
 func add_time(seconds: float) -> void:
@@ -35,7 +43,3 @@ func set_time(seconds: float) -> void:
 
 func hit(damage: float) -> void:
 	subtract_time(damage)
-
-
-func _on_timer_timeout() -> void:
-	Lose.emit()
