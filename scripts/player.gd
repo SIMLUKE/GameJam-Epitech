@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
 
-const SPEED = 220.0
-const JUMP_VELOCITY = -400.0
+@export var SPEED = 220.0
+@export var JUMP_VELOCITY = -400.0
 
-const DASH_SPEED = 700.0
+@export var  DASH_SPEED = 700.0
 var is_dashing = false
 var dashing_dir = Vector2();
 
 @export var nb_dash = 4;
 var remaining_dash = nb_dash;
 @export var can_walljump = true;
+@export var velocity_retention = 0.5;  # How much of current velocity to keep when hitting coin (0.0 = none, 1.0 = full)
 var has_dash_colide = false;
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
@@ -213,9 +214,9 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		# Impact frame freeze (Ultrakill-style)
 		freeze_frame(0.1)
 		
-		# Apply knockback force
+		# Apply knockback force with velocity retention multiplier
 		var knockback_force = area.get_meta("power")
-		velocity = direction * knockback_force
+		velocity = (velocity * velocity_retention) + (direction * knockback_force)
 		
 		# Recharge dash on coin hit
 		recharge_dash()

@@ -57,8 +57,8 @@ animations = [{
 script = ExtResource("1_fys6r")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1421697041]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 128
+collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=292149436]
 shape = SubResource("CircleShape2D_fys6r")

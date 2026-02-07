@@ -348,6 +348,7 @@ script = ExtResource("1_mdl7e")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=166682594]
 script = ExtResource("1_xhfnw")
+SPEED = 180.0
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=990267631]
 zoom = Vector2(1.5, 1.5)
