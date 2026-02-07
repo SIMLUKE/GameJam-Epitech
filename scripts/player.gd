@@ -12,6 +12,8 @@ var dashing_dir = Vector2();
 var remaining_dash = nb_dash;
 var AfterimageScene = preload("res://trail.tscn")
 
+@export var freeze : bool = false
+
 var looking = 1.0;
 
 func _physics_process(delta: float) -> void:
@@ -47,7 +49,8 @@ func _physics_process(delta: float) -> void:
 				velocity.x = direction_x * SPEED
 			else:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
-	move_and_slide()
+	if (not freeze):
+		move_and_slide()
 
 const dashing_scale = Vector2(1.3, 0.7)
 const default_scale = Vector2(1.0, 1.0)
@@ -129,7 +132,7 @@ func _on_dash_timer_timeout() -> void:
 
 func spawn_trail() -> void:
 	var afterimage = AfterimageScene.instantiate()
-	afterimage.global_position = global_position
+	afterimage.position = position
 	afterimage.set_texture_state($AnimatedSprite2D.scale, $AnimatedSprite2D.flip_h)
 	get_parent().add_child(afterimage)
 	

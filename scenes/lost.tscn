@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://35br08acbnlr"]
+
+[ext_resource type="Script" uid="uid://narbb6u3hver" path="res://scripts/lost.gd" id="1_5scu2"]
+
+[node name="Lost" type="Node2D" unique_id=245813784]
+script = ExtResource("1_5scu2")
+
+[node name="Loser" type="Label" parent="." unique_id=1310378088]
+offset_left = 105.0
+offset_top = 96.0
+offset_right = 219.0
+offset_bottom = 119.0
+text = "You lost looser"
+
+[node name="Button" type="Button" parent="." unique_id=241107630]
+offset_left = 109.0
+offset_top = 196.0
+offset_right = 224.0
+offset_bottom = 227.0
+text = "Back to menu"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://coyq0hbxs36so"]
+
+[ext_resource type="Script" uid="uid://6x18xyfkbu7x" path="res://scripts/basic_enemy.gd" id="1_md22f"]
+[ext_resource type="Texture2D" uid="uid://c2s0vyhgcyybn" path="res://assets/icon.svg" id="2_fn5nn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wm70f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cuegt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fn5nn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md22f"]
+size = Vector2(103.00003, 96.00004)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fn5nn"]
+size = Vector2(90.5, 79)
+
+[node name="BasicEnemy" type="Node2D" unique_id=994023110]
+script = ExtResource("1_md22f")
+metadata/_edit_group_ = true
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1580756758]
+position = Vector2(-1.4210855e-14, -2.842171e-14)
+scale = Vector2(0.99999994, 0.99999994)
+physics_material_override = SubResource("PhysicsMaterial_wm70f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D" unique_id=1342271659]
+position = Vector2(-0.9999962, -4)
+scale = Vector2(0.7265625, 0.6435547)
+sprite_frames = SubResource("SpriteFrames_cuegt")
+
+[node name="Area2D" type="Area2D" parent="RigidBody2D" unique_id=1102998219]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/Area2D" unique_id=1084344691]
+position = Vector2(-0.99999905, -6.000001)
+scale = Vector2(0.9999995, 0.9999995)
+shape = SubResource("RectangleShape2D_md22f")
+debug_color = Color(0.96862745, 0, 0, 0.41960785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=695104832]
+position = Vector2(-0.24999617, -3.4999979)
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_fn5nn")
+
+[connection signal="body_entered" from="RigidBody2D" to="." method="_on_rigid_body_2d_body_entered"]
+[connection signal="body_entered" from="RigidBody2D/Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://uvg024ltuvyi"]
 
 [ext_resource type="Texture2D" uid="uid://cgnjabnlgsvcy" path="res://assets/sprites/Mossy Tileset/Mossy - TileSet.png" id="2_4038r"]
-[ext_resource type="PackedScene" uid="uid://ca6nd1fcgp0tu" path="res://scenes/Player.tscn" id="2_if4l3"]
+[ext_resource type="PackedScene" uid="uid://coyq0hbxs36so" path="res://scenes/basic_enemy.tscn" id="3_4038r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_if4l3"]
 texture = ExtResource("2_4038r")
@@ -164,8 +164,9 @@ sources/4 = SubResource("TileSetAtlasSource_if4l3")
 
 [node name="level2" type="Node2D" unique_id=2131177618]
 
-[node name="Player" parent="." unique_id=1590788841 instance=ExtResource("2_if4l3")]
-
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1970589003]
 tile_map_data = PackedByteArray("AAD//wAABAAAAAAAAAD//wEABAAAAAEAAAD//wIABAAAAAIAAAAAAAAABAABAAAAAAAAAAEABAABAAEAAAAAAAIABAABAAIAAAABAAAABAACAAAAAAABAAEABAACAAEAAAABAAIABAACAAIAAAA=")
 tile_set = SubResource("TileSet_6ep0u")
+
+[node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
+position = Vector2(238, -180)

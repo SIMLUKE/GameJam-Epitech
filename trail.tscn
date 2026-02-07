@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://80vfie68v3ja"]
 
-[ext_resource type="Script" uid="uid://bjwm5ws02skub" path="res://trail.gd" id="1_xjhlx"]
+[ext_resource type="Script" path="res://trail.gd" id="1_xjhlx"]
 [ext_resource type="Texture2D" uid="uid://e8fjqq178v0b" path="res://assets/Characters/Thief_anim.png" id="2_abn3g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6s3rl"]

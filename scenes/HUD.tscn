@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c8mqwvrcyjypj"]
+
+[node name="HUD" type="Node" unique_id=374305310]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1312082848]
+
+[node name="Time" type="Label" parent="CanvasLayer" unique_id=279927745]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0"

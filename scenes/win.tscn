@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d2w2m025pqsfv"]
+
+[ext_resource type="Script" uid="uid://cdvocro3by3et" path="res://scripts/win.gd" id="1_r4oei"]
+
+[node name="Win" type="Node2D" unique_id=1356870991]
+script = ExtResource("1_r4oei")
+
+[node name="Label" type="Label" parent="." unique_id=1765994831]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="." unique_id=1338596394]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

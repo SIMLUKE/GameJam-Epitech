@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bp71qag1s13hq"]
+
+[ext_resource type="Script" uid="uid://on1lr8qag2mf" path="res://scripts/menu.gd" id="1_yqeox"]
+
+[node name="Menu" type="Node2D" unique_id=955462581]
+script = ExtResource("1_yqeox")
+
+[node name="Title" type="Label" parent="." unique_id=237047546]
+offset_left = 139.0
+offset_top = 60.0
+offset_right = 203.0
+offset_bottom = 83.0
+text = "LE TITRE"
+
+[node name="Button" type="Button" parent="." unique_id=593800682]
+offset_left = 143.0
+offset_top = 153.0
+offset_right = 199.0
+offset_bottom = 184.0
+text = "START"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
