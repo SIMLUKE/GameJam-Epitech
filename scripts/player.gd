@@ -15,6 +15,7 @@ var remaining_dash = nb_dash;
 var remaining_coins = 0  # Current coins available
 var coin_regen_timer = 0.0
 @export var can_walljump = true;
+@export var velocity_retention = 0.5;  # How much of current velocity to keep when hitting coin (0.0 = none, 1.0 = full)
 var has_dash_colide = false;
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
@@ -218,6 +219,8 @@ func process_player_scale(delta: float):
 
 
 func process_player_animation() -> void:
+	if ($AnimatedSprite2D.animation != "default" or $AnimatedSprite2D.animation != "run"):
+		return
 	if (velocity.x == 0 and velocity.y == 0):
 		$AnimatedSprite2D.play("default")
 	else:
@@ -301,6 +304,8 @@ func freeze_frame(duration: float) -> void:
 func _on_player_unlock(mvt: Variant) -> void:
 	if (mvt == "dash"):
 		nb_dash += 1
+		get_parent().subtract_time(30)
 	if (mvt == "coin"):
+		get_parent().subtract_time(130)
 		remaining_coins += 1
 		nb_coins += 1  # Increase max coins when unlocking
