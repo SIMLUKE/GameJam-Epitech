@@ -7,6 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://c8mqwvrcyjypj" path="res://scenes/HUD.tscn" id="5_qu4a1"]
 [ext_resource type="AudioStream" uid="uid://c71qjskb2pv02" path="res://assets/sounds/dash.wav" id="6_70d11"]
 [ext_resource type="AudioStream" uid="uid://bjwmwqe0b36ee" path="res://assets/sounds/jump.wav" id="7_cw2d6"]
+[ext_resource type="AudioStream" uid="uid://d2l10bw4jdx2b" path="res://assets/sounds/PunchSwoosh.ogg.mp3" id="8_bruh7"]
+[ext_resource type="AudioStream" uid="uid://lps7r2a5ea2" path="res://assets/sounds/land.wav" id="8_khinc"]
+[ext_resource type="AudioStream" uid="uid://cxoolt36axukx" path="res://assets/sounds/parry-ultrakill.mp3" id="9_6eyey"]
+[ext_resource type="AudioStream" uid="uid://cybhmnmc3xah3" path="res://assets/sounds/wall_slide.wav" id="9_bruh7"]
+[ext_resource type="Script" path="res://scripts/wall_particules.gd" id="12_o4126"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
 size = Vector2(22, 18)
@@ -281,6 +286,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_70d11"]
 resource_name = "hit"
+step = 0.0666
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -312,7 +318,7 @@ tracks/2/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.13333334, 0.33333334),
+"times": PackedFloat32Array(0.03333333, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -337,8 +343,21 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_khinc"]
-radius = 2.9999993
-height = 22.0
+radius = 4.9999986
+height = 23.999992
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d3wef"]
+lifetime_randomness = 0.27
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -10, 0)
+gravity = Vector3(0, -80, 0)
+tangential_accel_min = -92.21
+tangential_accel_max = 64.92
+color = Color(0.75753623, 0.9390992, 0.08620087, 1)
+hue_variation_min = -0.36
+hue_variation_max = 0.20999998
 
 [node name="Player" type="Node2D" unique_id=1590788841]
 script = ExtResource("1_mdl7e")
@@ -358,7 +377,6 @@ shape = SubResource("RectangleShape2D_kpjcp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=510710394]
 position = Vector2(-0.9999995, 0)
-scale = Vector2(3.0916665, 3.6644738)
 sprite_frames = SubResource("SpriteFrames_kne1u")
 animation = &"stab"
 frame = 1
@@ -390,5 +408,33 @@ pitch_scale = 1.34
 stream = ExtResource("7_cw2d6")
 volume_db = -20.26
 
+[node name="slash" type="AudioStreamPlayer" parent="." unique_id=951693105]
+stream = ExtResource("8_bruh7")
+
+[node name="coin_hit" type="AudioStreamPlayer" parent="." unique_id=16292291]
+stream = ExtResource("9_6eyey")
+
+[node name="land" type="AudioStreamPlayer" parent="." unique_id=670194145]
+stream = ExtResource("8_khinc")
+volume_db = -12.731
+
+[node name="wall_slide" type="AudioStreamPlayer" parent="." unique_id=1249892741]
+stream = ExtResource("9_bruh7")
+volume_db = -18.91
+
+[node name="wall_particules" type="GPUParticles2D" parent="." unique_id=1210151352]
+emitting = false
+amount = 400
+lifetime = 0.67
+preprocess = 2.4
+randomness = 1.0
+draw_order = 0
+trail_enabled = true
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_d3wef")
+script = ExtResource("12_o4126")
+
+[connection signal="unlock" from="." to="CharacterBody2D" method="_on_player_unlock"]
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="CharacterBody2D/dash_timer" to="CharacterBody2D" method="_on_dash_timer_timeout"]
+[connection signal="area_entered" from="CharacterBody2D/Hitbox" to="CharacterBody2D" method="_on_hitbox_area_entered"]

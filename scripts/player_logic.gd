@@ -7,6 +7,8 @@ signal win
 
 signal lose
 
+signal unlock(mvt)
+
 var alive = true
 
 func _ready() -> void:
@@ -59,3 +61,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		lose.emit()
 	$CharacterBody2D/AnimatedSprite2D.play("default")
 	
+func reset() -> void:
+	$CharacterBody2D.nb_coins = 0
+	$CharacterBody2D.nb_dash = 0
+	$CharacterBody2D.position = Vector2.ZERO
+	time_remaining = time_remaining_default
+	alive = true
