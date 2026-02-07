@@ -25,19 +25,17 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		if (is_on_wall()):
+			looking = get_wall_normal().x
+			velocity.y = 5000.0 * delta
 
 	if (Input.is_action_just_pressed("ui_accept")
 		and (is_on_floor() or (is_on_wall() and can_walljump))):
-		velocity.y = JUMP_VELOCITY
-
-		if is_on_wall() and not is_on_floor():
-			var wall_dir = get_wall_normal().x
-			# pousse à l'opposé du mur
-			velocity.x = wall_dir * SPEED * 2
+		jump()
 
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y := Input.get_axis("ui_up", "ui_down")
-	if (direction_x):
+	if (direction_x and not is_on_wall()):
 		looking = sign(direction_x)
 	$AnimatedSprite2D.flip_h = looking < 0.0;
 	if (is_dashing):
@@ -75,7 +73,18 @@ func _physics_process(delta: float) -> void:
 	if (not freeze):
 		move_and_slide()
 
+func jump():
+	$"../jump_sound".play()
+	velocity.y = JUMP_VELOCITY
+
+	if is_on_wall() and not is_on_floor():
+		var wall_dir = get_wall_normal().x
+		# pousse à l'opposé du mur
+		velocity.x = wall_dir * SPEED * 2
+
+
 func dash(x, y):
+	$"../dash_sound".play()
 	remaining_dash -= 1;
 	var dash_input = Vector2(x, y)
 	if dash_input == Vector2.ZERO:
