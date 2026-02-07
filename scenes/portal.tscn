@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cd3es6j53qdrt"]
+
+[ext_resource type="Script" uid="uid://tyqgbjjhafhp" path="res://scripts/portal.gd" id="1_1ffj6"]
+[ext_resource type="Texture2D" uid="uid://7x8467g2tkfh" path="res://assets/sprites/star.png" id="1_v0xau"]
+[ext_resource type="Script" uid="uid://dl4j6ekev3wmr" path="res://scripts/portal_animation.gd" id="3_jr6l0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ffj6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr6l0"]
+atlas = ExtResource("1_v0xau")
+region = Rect2(460, 150, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d4jfq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jr6l0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="portal" type="Node2D" unique_id=189543025]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=35047307]
+script = ExtResource("1_1ffj6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=118288794]
+shape = SubResource("RectangleShape2D_1ffj6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=206362119]
+sprite_frames = SubResource("SpriteFrames_d4jfq")
+script = ExtResource("3_jr6l0")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

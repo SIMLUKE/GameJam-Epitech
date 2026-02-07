@@ -1,9 +1,12 @@
 extends Node
 
+signal change_scene(scene)
+
 # Preload scenes to avoid loading them multiple times
 const WIN_SCENE = preload("res://scenes/win.tscn")
 const LOST_SCENE = preload("res://scenes/lost.tscn")
 const LEVEL2_SCENE = preload("res://scenes/level2.tscn")
+const LEVEL3_SCENE = preload("res://scenes/level3.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,7 +24,10 @@ func _on_player_win() -> void:
 	$Player.hide()
 	$Player/CharacterBody2D.freeze = true
 	$Player/CharacterBody2D.position = Vector2.ZERO
-	$level2.queue_free()
+	if (get_node_or_null("level2") != null):
+		$"level2".queue_free()
+	if (get_node_or_null("level3") != null):
+		$"level3".queue_free()
 	var win_scene = WIN_SCENE.instantiate()
 	add_child(win_scene)
 	# Connect signals if the win scene has any (e.g., restart button)
@@ -32,7 +38,10 @@ func _on_player_lose() -> void:
 	$Player.hide()
 	$Player/CharacterBody2D.freeze = true
 	$Player/CharacterBody2D.position = Vector2.ZERO
-	$level2.queue_free()
+	if (get_node_or_null("level2") != null):
+		$"level2".queue_free()
+	if (get_node_or_null("level3") != null):
+		$"level3".queue_free()
 	var lost_scene = LOST_SCENE.instantiate()
 	add_child(lost_scene)
 
@@ -55,3 +64,8 @@ func _on_death_plane_body_entered(body: Node2D) -> void:
 		parent.queue_free()
 	else:
 		body.queue_free()
+
+
+func _on_change_scene(scene: Variant) -> void:
+	$"level2".queue_free()
+	call_deferred("add_child", scene)

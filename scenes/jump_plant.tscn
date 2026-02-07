@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bch0t5uyntsxe"]
 
 [ext_resource type="Texture2D" uid="uid://b6kglcjvnex0l" path="res://assets/sprites/Plant Animations/PlantJump/JumpPlant_00000.png" id="1_pw2wc"]
-[ext_resource type="Script" uid="uid://bpstepa85e4mi" path="res://scripts/area_2d.gd" id="1_t5q2o"]
+[ext_resource type="Script" uid="uid://bpstepa85e4mi" path="res://scripts/plant_animation.gd" id="1_t5q2o"]
 [ext_resource type="Texture2D" uid="uid://bmdcn1pxj6tdn" path="res://assets/sprites/Plant Animations/PlantJump/JumpPlant_00001.png" id="2_t5q2o"]
 [ext_resource type="Texture2D" uid="uid://bwhrbmo6nvkdn" path="res://assets/sprites/Plant Animations/PlantJump/JumpPlant_00002.png" id="3_qac2d"]
 [ext_resource type="Texture2D" uid="uid://c4besmq4h43i8" path="res://assets/sprites/Plant Animations/PlantJump/JumpPlant_00003.png" id="4_q6rmo"]

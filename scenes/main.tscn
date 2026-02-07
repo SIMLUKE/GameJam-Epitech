@@ -9,6 +9,9 @@
 script = ExtResource("1_h2yge")
 
 [node name="Player" parent="." unique_id=1590788841 instance=ExtResource("3_sugp2")]
+z_index = 10
+z_as_relative = false
+position = Vector2(0, -34)
 
 [node name="Menu" parent="." unique_id=955462581 instance=ExtResource("3_jyhfs")]
 position = Vector2(5, 10)
@@ -16,6 +19,7 @@ position = Vector2(5, 10)
 [node name="DeathPlane" parent="." unique_id=596229479 instance=ExtResource("4_jyhfs")]
 position = Vector2(0, 1346)
 
+[connection signal="change_scene" from="." to="." method="_on_change_scene"]
 [connection signal="lose" from="Player" to="." method="_on_player_lose"]
 [connection signal="win" from="Player" to="." method="_on_player_win"]
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]
