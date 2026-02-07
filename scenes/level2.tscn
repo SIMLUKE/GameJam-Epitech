@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bh1dwxtgc4btt" path="res://assets/sprites/Mossy Tileset/Mossy - Hanging Plants.png" id="4_alqfr"]
 [ext_resource type="PackedScene" uid="uid://bch0t5uyntsxe" path="res://scenes/jump_plant.tscn" id="7_6ep0u"]
 [ext_resource type="PackedScene" uid="uid://dkuup3qinp83" path="res://scenes/goal.tscn" id="8_hrcei"]
-[ext_resource type="PackedScene" path="res://scenes/dash.tscn" id="9_xa7n4"]
-[ext_resource type="PackedScene" path="res://scenes/coins.tscn" id="10_bo4dx"]
+[ext_resource type="PackedScene" uid="uid://cuk5rg3c4cmd8" path="res://scenes/dash.tscn" id="9_xa7n4"]
+[ext_resource type="PackedScene" uid="uid://cgw2xcfdkri1o" path="res://scenes/coins.tscn" id="10_bo4dx"]
 [ext_resource type="PackedScene" uid="uid://cd3es6j53qdrt" path="res://scenes/portal.tscn" id="11_76toy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xa7n4"]

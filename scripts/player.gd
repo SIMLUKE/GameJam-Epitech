@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			coin_regen_timer = 0.0
 	else:
 		coin_regen_timer = 0.0
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		in_the_air = true
@@ -146,7 +146,7 @@ func wall_slide(delta: float):
 	else:
 		$"../wall_slide".stop()
 		$"../wall_particules".emitting = false
-	
+
 
 func land():
 	in_the_air = false
@@ -239,7 +239,7 @@ func _process(delta: float) -> void:
 		var coin_e = coin.instantiate()
 		remaining_coins -= 1
 		# Spawn coin at player position with player velocity plus upward boost
-		coin_e.position = global_position
+		coin_e.position = position
 		if coin_e.has_method("set_initial_velocity"):
 			var initial_velocity = velocity
 			initial_velocity.y -= 300.0  # Add upward velocity
@@ -264,15 +264,18 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if (area.name == "hit_coin_area"):
 		# Send the player flying based on coin position relative to player
 		var coin_position = area.global_position
-		var direction = (position - coin_position).normalized()
+		var direction = (global_position - coin_position).normalized()
 		$"../coin_hit".play()
-		
+
 		# Impact frame freeze (Ultrakill-style)
 		freeze_frame(0.1)
-		
+
 		# Apply knockback force with velocity retention multiplier
 		var knockback_force = area.get_meta("power")
 		velocity = (velocity * velocity_retention) + (direction * knockback_force)
+
+		print(velocity)
+
 		# Recharge dash on coin hit
 		recharge_dash()
 
@@ -280,21 +283,21 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func freeze_frame(duration: float) -> void:
 	# Freeze the game
 	Engine.time_scale = 0.0
-	
+
 	# Create canvas layer for UI overlay
 	var canvas_layer = CanvasLayer.new()
 	canvas_layer.layer = 100  # Render on top
 	get_tree().root.add_child(canvas_layer)
-	
+
 	# Create white flash overlay
 	var flash = ColorRect.new()
 	flash.color = Color(1.0, 1.0, 1.0, 0.5)  # White with 50% transparency
 	flash.set_anchors_preset(Control.PRESET_FULL_RECT)  # Fill entire screen
 	canvas_layer.add_child(flash)
-	
+
 	# Use get_tree to create a timer on the scene tree
 	await get_tree().create_timer(duration, true, false, true).timeout
-	
+
 	# Unfreeze and remove flash
 	Engine.time_scale = 1.0
 	canvas_layer.queue_free()
