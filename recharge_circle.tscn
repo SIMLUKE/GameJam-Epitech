@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://digv2lv5icd02"]
+
+[ext_resource type="Script" uid="uid://6xk78u4d1g1e" path="res://scripts/recharge_circle.gd" id="1_b5akf"]
+[ext_resource type="Texture2D" uid="uid://bs3ly5ojiwlvs" path="res://assets/sprites/circle.png" id="2_pl2te"]
+
+[node name="recharge_circle" type="Node2D" unique_id=1375299370]
+position = Vector2(0, 1)
+rotation = 1.246856
+script = ExtResource("1_b5akf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1565878936]
+z_index = -1
+position = Vector2(4.500063, 2.500001)
+scale = Vector2(0.14625, 0.14208333)
+texture = ExtResource("2_pl2te")
+
+[node name="Timer" type="Timer" parent="." unique_id=888116247]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

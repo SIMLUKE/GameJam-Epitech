@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://uvg024ltuvyi"]
 
 [ext_resource type="Texture2D" uid="uid://cgnjabnlgsvcy" path="res://assets/sprites/Mossy Tileset/Mossy - TileSet.png" id="2_4038r"]
-[ext_resource type="PackedScene" uid="uid://coyq0hbxs36so" path="res://scenes/basic_enemy.tscn" id="3_4038r"]
+[ext_resource type="PackedScene" path="res://scenes/basic_enemy.tscn" id="3_4038r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_if4l3"]
 texture = ExtResource("2_4038r")

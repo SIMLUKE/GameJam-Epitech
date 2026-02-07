@@ -11,7 +11,8 @@ var dashing_dir = Vector2();
 @export var nb_dash = 4;
 var remaining_dash = nb_dash;
 var AfterimageScene = preload("res://trail.tscn")
-#var circle = preload("res://circle.tscn")
+var BeginCircle = preload("res://beggin_circle.tscn")
+var RegchargeCircle = preload("res://recharge_circle.tscn")
 
 
 @export var freeze : bool = false
@@ -37,22 +38,37 @@ func _physics_process(delta: float) -> void:
 		velocity.y = dashing_dir.y * DASH_SPEED
 	else:
 		if (Input.is_action_just_pressed("dash") and remaining_dash > 0):
-			remaining_dash -= 1;
-			var dash_input = Vector2(direction_x, direction_y)
-			if dash_input == Vector2.ZERO:
-				dash_input.x = looking
-			dashing_dir = dash_input.normalized()
-			is_dashing = true
-			$dash_timer.start()
+			dash(direction_x, direction_y)
 		else:
 			if is_on_floor():
-				remaining_dash = nb_dash
+				recharge_dash()
 			if direction_x:
 				velocity.x = direction_x * SPEED
 			else:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 	if (not freeze):
 		move_and_slide()
+
+func dash(x, y):
+	remaining_dash -= 1;
+	var dash_input = Vector2(x, y)
+	if dash_input == Vector2.ZERO:
+		dash_input.x = looking
+	dashing_dir = dash_input.normalized()
+	is_dashing = true
+	$dash_timer.start()
+	var begin_circle = BeginCircle.instantiate()
+	begin_circle.position = position
+	begin_circle.init_scale(x, y, looking)
+	get_parent().add_child(begin_circle)
+
+func recharge_dash():
+	if (remaining_dash != nb_dash):
+		remaining_dash = nb_dash
+		var recharge_circle = RegchargeCircle.instantiate()
+		recharge_circle.position = Vector2.ZERO
+		add_child(recharge_circle)
+
 
 const dashing_scale = Vector2(1.3, 0.7)
 const default_scale = Vector2(1.0, 1.0)
