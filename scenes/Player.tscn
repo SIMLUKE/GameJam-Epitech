@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bsbbbwei2iok4" path="res://scripts/player_logic.gd" id="1_mdl7e"]
 [ext_resource type="Script" uid="uid://ubstlqyj2ddn" path="res://scripts/player.gd" id="1_xhfnw"]
 [ext_resource type="Texture2D" uid="uid://e8fjqq178v0b" path="res://assets/Characters/Thief_anim.png" id="2_v6fml"]
+[ext_resource type="Script" uid="uid://b7hyxt4k2n7t5" path="res://scripts/camera_2d.gd" id="3_qu4a1"]
 [ext_resource type="PackedScene" uid="uid://c8mqwvrcyjypj" path="res://scenes/HUD.tscn" id="5_qu4a1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
@@ -133,6 +134,13 @@ time_remaining_default = 10.0
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=166682594]
 script = ExtResource("1_xhfnw")
 
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=990267631]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+rotation_smoothing_speed = 1.0
+script = ExtResource("3_qu4a1")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1019488975]
 position = Vector2(0.4999997, 0)
 scale = Vector2(0.28, 0.28)
@@ -142,9 +150,6 @@ shape = SubResource("RectangleShape2D_kpjcp")
 position = Vector2(2.3841858e-07, -1.9073486e-06)
 sprite_frames = SubResource("SpriteFrames_kne1u")
 frame_progress = 0.21603379
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=990267631]
-zoom = Vector2(1.5, 1.5)
 
 [node name="dash_timer" type="Timer" parent="CharacterBody2D" unique_id=977590563]
 wait_time = 0.2

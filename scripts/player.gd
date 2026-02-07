@@ -10,6 +10,7 @@ var dashing_dir = Vector2();
 
 @export var nb_dash = 4;
 var remaining_dash = nb_dash;
+var has_dash_colide = false;
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
 var RegchargeCircle = preload("res://recharge_circle.tscn")
@@ -34,9 +35,16 @@ func _physics_process(delta: float) -> void:
 		looking = sign(direction_x)
 	$AnimatedSprite2D.flip_h = looking < 0.0;
 	if (is_dashing):
+		if ((is_on_floor() and dashing_dir.y > 0) or
+					(is_on_ceiling() and dashing_dir.y < 0) or
+					(is_on_wall() and abs(dashing_dir.x) > 0)
+				and not has_dash_colide):
+			has_dash_colide = true
+			$Camera2D.apply_shake()
 		velocity.x = dashing_dir.x * DASH_SPEED
 		velocity.y = dashing_dir.y * DASH_SPEED
 	else:
+		has_dash_colide = false
 		if (Input.is_action_just_pressed("dash") and remaining_dash > 0):
 			dash(direction_x, direction_y)
 		else:
@@ -113,17 +121,27 @@ func process_player_scale(delta: float):
 			if (abs(ay - ax) < 0.01):
 				$AnimatedSprite2D.rotation_degrees = looking * 20
 	else:
+		# intensité basée sur la vitesse verticale
+		var max_fall_speed := 500.0
+		var t = clamp(abs(velocity.y) / max_fall_speed, 0.0, 1.0)
+
+		# scale dynamique
+		var target_scale_y = lerp(1.0, 1.4, t)
+		var target_scale_x = lerp(1.0, 0.6, t)
+
+		# application smooth
+		$AnimatedSprite2D.scale.x = lerp(
+			$AnimatedSprite2D.scale.x,
+			target_scale_x,
+			delta * 20
+		)
+		$AnimatedSprite2D.scale.y = lerp(
+			$AnimatedSprite2D.scale.y,
+			target_scale_y,
+			delta * 20
+		)
+
 		$AnimatedSprite2D.rotation_degrees = 0
-		set_player_scale_x(
-			$AnimatedSprite2D.scale.x - speed_reset,
-			default_scale.x,
-			dashing_scale.x
-		)
-		set_player_scale_y(
-			$AnimatedSprite2D.scale.y + speed_reset,
-			dashing_scale.y,
-			default_scale.y
-		)
 
 
 func process_player_animation() -> void:
