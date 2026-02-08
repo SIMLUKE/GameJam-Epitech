@@ -1,8 +1,7 @@
 extends Area2D
 
-@export  var next_level = "res://scenes/level3.tscn"
+@export var next_level = "res://scenes/level3.tscn"
 
-var LEVEL_3_SCENE = load(next_level)
 const MAIN_SCENE = preload("res://scenes/main.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -17,4 +16,6 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	body.position = Vector2(0, 0)
-	get_tree().root.get_node("main").emit_signal("change_scene", $"../", LEVEL_3_SCENE.instantiate())
+	# Load the scene at runtime so it uses the exported variable value
+	var next_scene = load(next_level)
+	get_tree().root.get_node("main").emit_signal("change_scene", $"../", next_scene.instantiate())

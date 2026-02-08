@@ -85,7 +85,17 @@ func _physics_process(delta: float) -> void:
 			FRICTION = 300.0
 
 		if direction_x != 0:
-			velocity.x = move_toward(velocity.x, direction_x * SPEED, ACCEL * delta)
+			# Preserve momentum: only slow down if changing direction or at max speed
+			var current_speed = abs(velocity.x)
+			var target_speed = direction_x * SPEED
+			
+			# If moving in same direction and already faster than SPEED, don't slow down
+			if sign(velocity.x) == sign(direction_x) and current_speed > SPEED:
+				# Maintain high speed, just steer slightly
+				velocity.x = move_toward(velocity.x, direction_x * current_speed, ACCEL * delta * 0.3)
+			else:
+				# Normal acceleration
+				velocity.x = move_toward(velocity.x, target_speed, ACCEL * delta)
 		else:
 			velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 

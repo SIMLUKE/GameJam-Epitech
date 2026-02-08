@@ -14,15 +14,13 @@ func _ready():
 	position_smoothing_enabled = true
 	position_smoothing_speed = follow_speed
 
-# Apply shake based on impact speed
 func apply_shake(impact_speed: float = 0.0):
 	if impact_speed > 0.0:
-		# Only shake if speed is above threshold
 		if impact_speed >= min_shake_speed:
-			# Speed-based shake: stronger at higher speeds
+			$"../../impact".play()
 			shake_strength = min(impact_speed * speed_shake_multiplier, randomStrength * 3.0)
 	else:
-		# Default shake if no speed provided (legacy support)
+		$"../../impact".play()
 		shake_strength = randomStrength
 
 func _process(delta):
