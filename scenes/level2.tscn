@@ -635,7 +635,7 @@ tile_set = SubResource("TileSet_alqfr")
 
 [node name="BasicEnemy" parent="." unique_id=994023110 instance=ExtResource("3_4038r")]
 z_index = 10
-position = Vector2(-226.09465, -469.9222)
+position = Vector2(1640, -245.00006)
 
 [node name="LayerWall" type="TileMapLayer" parent="." unique_id=1216690425]
 z_index = 20

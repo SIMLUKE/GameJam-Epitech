@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-const SPEED = 220.0
-const JUMP_VELOCITY = -400.0
+@export var SPEED = 160.0
+@export var JUMP_VELOCITY = -400.0
 
-const DASH_SPEED = 700.0
+@export var DASH_SPEED = 700.0
 var is_dashing = false
 var dashing_dir = Vector2();
 
@@ -17,6 +17,7 @@ var coin_regen_timer = 0.0
 @export var can_walljump = true;
 @export var velocity_retention = 0.5;  # How much of current velocity to keep when hitting coin (0.0 = none, 1.0 = full)
 var has_dash_colide = false;
+var previous_velocity = Vector2.ZERO  # Track velocity for collision detection
 var AfterimageScene = preload("res://trail.tscn")
 var BeginCircle = preload("res://beggin_circle.tscn")
 var RegchargeCircle = preload("res://recharge_circle.tscn")
@@ -54,13 +55,19 @@ func _physics_process(delta: float) -> void:
 	if (direction_x and not is_on_wall()):
 		looking = sign(direction_x)
 	$AnimatedSprite2D.flip_h = looking < 0.0;
+	
+	# Store velocity before collision detection
+	previous_velocity = velocity
+	
 	if (is_dashing):
-		if ((is_on_floor() and dashing_dir.y > 0) or
+		if (((is_on_floor() and dashing_dir.y > 0) or
 					(is_on_ceiling() and dashing_dir.y < 0) or
-					(is_on_wall() and abs(dashing_dir.x) > 0)
+					(is_on_wall() and abs(dashing_dir.x) > 0))
 				and not has_dash_colide):
 			has_dash_colide = true
-			$Camera2D.apply_shake()
+			# Use dash speed directly since velocity gets modified by collision
+			var impact_speed = DASH_SPEED
+			$Camera2D.apply_shake(impact_speed)
 		velocity.x = dashing_dir.x * DASH_SPEED
 		velocity.y = dashing_dir.y * DASH_SPEED
 	else:
@@ -86,8 +93,12 @@ func _physics_process(delta: float) -> void:
 			#	velocity.x = direction_x * SPEED
 			#else:
 			#	velocity.x = move_toward(velocity.x, 0, SPEED)
+	
 	if (not freeze):
 		move_and_slide()
+		
+		# Universal collision detection - check for any significant impacts
+		check_collision_shake()
 
 func jump():
 	$"../jump_sound".play()
@@ -97,6 +108,19 @@ func jump():
 		var wall_dir = get_wall_normal().x
 		# pousse à l'opposé du mur
 		velocity.x = wall_dir * SPEED * 2
+
+# Check for collisions and apply camera shake based on impact speed
+func check_collision_shake():
+	# Check if we hit something (velocity changed significantly)
+	var velocity_change = (previous_velocity - velocity).length()
+	
+	# Only apply shake if not dashing (dash has its own shake)
+	if velocity_change > 50.0 and not is_dashing:
+		# Check what we collided with
+		if is_on_wall() or is_on_floor() or is_on_ceiling():
+			var impact_speed = previous_velocity.length()
+			# Camera will check if speed is high enough for shake
+			$Camera2D.apply_shake(impact_speed)
 
 
 func dash(x, y):
