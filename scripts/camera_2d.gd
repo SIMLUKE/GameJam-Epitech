@@ -2,13 +2,28 @@ extends Camera2D
 
 @export var randomStrength: float = 5.0
 @export var shakeFade: float = 5.0
+@export var follow_speed: float = 8.0  # Higher = faster follow (range: 1-30 recommended)
+@export var speed_shake_multiplier: float = 0.01  # How much speed affects shake intensity
+@export var min_shake_speed: float = 300.0  # Minimum speed required to trigger shake (dash speed is 700)
 
 var rng = RandomNumberGenerator.new()
 
 var shake_strength: float = 0.0
 
-func apply_shake():
-	shake_strength = randomStrength
+func _ready():
+	position_smoothing_enabled = true
+	position_smoothing_speed = follow_speed
+
+# Apply shake based on impact speed
+func apply_shake(impact_speed: float = 0.0):
+	if impact_speed > 0.0:
+		# Only shake if speed is above threshold
+		if impact_speed >= min_shake_speed:
+			# Speed-based shake: stronger at higher speeds
+			shake_strength = min(impact_speed * speed_shake_multiplier, randomStrength * 3.0)
+	else:
+		# Default shake if no speed provided (legacy support)
+		shake_strength = randomStrength
 
 func _process(delta):
 	if shake_strength > 0.0:
