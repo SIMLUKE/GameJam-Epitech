@@ -342,6 +342,6 @@ func _on_player_unlock(mvt: Variant) -> void:
 		nb_dash += 1
 		get_parent().subtract_time(30)
 	if (mvt == "coin"):
-		get_parent().subtract_time(130)
+		get_parent().subtract_time(50)
 		remaining_coins += 1
 		nb_coins += 1  # Increase max coins when unlocking
