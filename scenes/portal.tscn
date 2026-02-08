@@ -21,16 +21,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="portal" type="Node2D" unique_id=189543025]
-
-[node name="Area2D" type="Area2D" parent="." unique_id=35047307]
+[node name="Portal" type="Area2D" unique_id=35047307]
 script = ExtResource("1_1ffj6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=118288794]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=118288794]
 shape = SubResource("RectangleShape2D_1ffj6")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=206362119]
+[node name="portal" type="Node2D" parent="." unique_id=189543025]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="portal" unique_id=206362119]
 sprite_frames = SubResource("SpriteFrames_d4jfq")
 script = ExtResource("3_jr6l0")
 
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
